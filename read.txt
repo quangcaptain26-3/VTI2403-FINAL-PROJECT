@@ -1,0 +1,71 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
+
+namespace Kiểm_tra_và_tìm_số_nguyên_tố
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        bool snt(int a)
+        {
+            if (a < 2) return false;
+            for (int i = 2; i <= Math.Sqrt(a); i++)
+                if (a % i == 0) return false;
+            return true;
+        }
+
+        private void txt_n_TextChanged(object sender, EventArgs e)
+
+        {
+            txt_behon.Text = String.Empty;
+            if (txt_n.Text == string.Empty)
+            {
+                MessageBox.Show("Bạn chưa nhập n", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);  
+                return;
+            }
+            else
+            {
+                int a = int.Parse(txt_n.Text);
+                if (snt(a) == true)
+                    txt_ktra.Text = "Là số nguyên tố";
+                else
+                    txt_ktra.Text = "Không là số nguyên tố";
+                for(int i = 2; i < a; i++)
+                {
+                    if (snt(i) == true)
+                        txt_behon.Text += i.ToString() + "; ";
+                }
+                if (txt_behon.Text == string.Empty) return;
+                // if last char is a semicolon, remove it   
+                if (txt_behon.Text[txt_behon.Text.Length - 2] == ';')
+                {
+                    txt_behon.Text = txt_behon.Text.Remove(txt_behon.Text.Length - 2, 2);
+                }
+            }
+        }
+
+        private void txt_n_MouseHover(object sender, EventArgs e)
+        {
+            toolTip1.Show("Nhập số n bất kỳ", txt_n);
+        }
+
+  
+
+        private void txt_n_MouseLeave_1(object sender, EventArgs e)
+        {
+            toolTip1.Hide(txt_n);
+        }
+    }
+}
